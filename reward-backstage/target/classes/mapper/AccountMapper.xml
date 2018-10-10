@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.java.dao.AccountMapper">
+  <resultMap id="BaseResultMap" type="com.cjf.java.entity.AccountEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="account_type" jdbcType="TINYINT" property="accountType" />
+    <result column="account_status" jdbcType="TINYINT" property="accountStatus" />
+    <result column="input_time" jdbcType="BIGINT" property="inputTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, account_name, password, account_type, account_status, input_time, update_time
+  </sql>
+  <select id="getAccountByOldPasswrod" parameterType="com.cjf.java.api.dto.AccountDto" resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List"/>
+	from 
+	t_account t where t.account_name = #{accountName,jdbcType=VARCHAR} 
+	AND t.`password` = #{oldPassword,jdbcType=VARCHAR}
+  </select>
+  <update id="updateAccount" parameterType="com.cjf.java.entity.AccountEntity">
+	update t_account 
+	<set>
+		<if test="accountName != null">
+			account_name = #{accountName},
+		</if>
+		<if test="password != null">
+			`password` = #{password} ,
+		</if>
+		<if test="accountType != null">
+			account_type = #{accountType},
+		</if>
+		<if test="accountStatus != null">
+			account_status = #{accountStatus},
+		</if>
+		<if test="inputTime != null">
+			input_time = #{inputTime},
+		</if>
+		<if test="updateTime != null">
+			update_time = #{updateTime}
+		</if>
+	</set>
+	where account_name = #{accountName}
+  </update>
+</mapper>

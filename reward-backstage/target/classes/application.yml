@@ -1,0 +1,24 @@
+server: 
+  port: 8080
+spring: 
+  application:
+    name: reward-web
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.104:3306/reward_center?characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp: 
+      max-active: 20
+      initial-size: 10
+      min-idle: 1
+      
+logging:
+  level:
+    root: INFO
+  file: /data/server/logs/info.log
+  
+mybatis: 
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  config-location: classpath:mybatis/mybatis-config.xml
