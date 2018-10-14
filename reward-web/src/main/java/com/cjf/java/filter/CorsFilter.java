@@ -38,7 +38,7 @@ public class CorsFilter implements Filter {
 			HttpServletRequest servletRequest = (HttpServletRequest) request;
 			String origin = servletRequest.getHeader("Origin");
 			if (StringUtils.isNotEmpty(origin)) {
-				log.warn("------------------origin:{}",origin);
+				log.warn("------------------origin:{}","*");
 				//允许客户端携带跨域cookie，此时origin值不能为“*”，只能为指定单一域名
 				servletResponse.setHeader("Access-Control-Allow-Origin", origin);
 			} else {

@@ -10,7 +10,7 @@ public class UserEntity {
 	private String phoneNum;
 	private String password;
 	private String email;
-	private Integer accountId;
+	private Integer operatorId;
 	private Integer status;
 	private Long inputTime;
 	private Long updateTime;

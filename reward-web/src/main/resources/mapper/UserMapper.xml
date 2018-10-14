@@ -5,24 +5,57 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
     <result column="phone_num" jdbcType="VARCHAR" property="phoneNum" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="account_id" jdbcType="TINYINT" property="accountId" />
+    <result column="operator_id" jdbcType="TINYINT" property="operatorId" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="input_time" jdbcType="BIGINT" property="inputTime" />
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, real_name, phone_num, password, email, account_id, status, input_time, update_time
+    id, real_name, phone_num, email, operator_id, status, input_time, update_time
   </sql>
   
   <select id="queryRegisterPhoneNumByPhoneNum"
-		parameterType="java.lang.String" resultMap="BaseResultMap">
+		parameterType="java.lang.String" resultType="int">
   	SELECT count(*) FROM t_user where phone_num = #{phoneNum}
   </select>
+  
   <insert id="addUser" parameterType="com.cjf.java.entity.UserEntity">
-  	INSERT INTO t_user (real_name, phone_num, email, account_id, status, input_time, update_time)
-  	VALUES(#{realName},#{phoneNum},#{email},#{accountId},#{status},#{inputTime},#{updateTime})
+  	INSERT INTO t_user (real_name, phone_num, password, email, operator_id, status, input_time, update_time)
+  	VALUES(#{realName},#{phoneNum}, #{password}, #{email},#{operatorId},#{status},#{inputTime},#{updateTime})
   </insert>
+  
+  <select id="queryUserByNameAndPassword"
+	resultMap="BaseResultMap"
+	parameterType="com.cjf.java.api.dto.UserLoginDto">
+		select 
+		<include refid="Base_Column_List"/>
+		from t_user t 
+		where 
+		t.phone_num = #{phoneNum} and 
+		t.`password` = #{password}
+   </select>
+   
+   
+   
+   <resultMap type="com.cjf.java.api.vo.UserAccountInfoVo" id="User_Account_Result" extends="BaseResultMap">
+   	<result column="user_id" jdbcType="INTEGER" property="userId"/>
+   	<result column="recharge_amount_total" jdbcType="DECIMAL" property="rechargeAmountTotal"/>
+   	<result column="gold_coin" jdbcType="INTEGER" property="goldCoinoin"/>
+   </resultMap>
+   
+   <sql id="UserAccountInfo">
+	t.id, t.real_name, t.phone_num, t.email, t.operator_id, t.status,
+	t.input_time, t.update_time, t1.user_id,
+	t1.recharge_amount_total, t1.gold_coin
+   </sql>
+   
+   <select id="querUserInfoByUserId" parameterType="java.lang.Integer" resultMap="User_Account_Result">
+   	 SELECT 
+   	 <include refid="UserAccountInfo"/>
+   	 FROM t_user t LEFT JOIN t_user_account t1 ON t.id = t1.user_id 
+   	 WHERE t.id = #{id}
+   </select>
+
 </mapper>
