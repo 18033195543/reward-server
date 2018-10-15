@@ -2,6 +2,7 @@ package com.cjf.java.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cjf.java.api.ResourcesApi;
@@ -25,7 +26,7 @@ public class ResourcesController {
 	 * @return
 	 */
 	@RequestMapping(value = ResourcesApi.QUERY_VIDEO_LIST, method = RequestMethod.GET)
-	public JSONResult queryVideoList() {
+	public JSONResult queryVideoList(@RequestParam(value="currPage", defaultValue = "1") Integer currPage) {
 		
 		
 		return null;
