@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.java.dao.ResourcesMapper">
+
+    <resultMap id="BaseResultMap" type="com.cjf.java.entity.ResourcesEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="video_name" jdbcType="VARCHAR" property="videoName" />
+    <result column="extension_name" jdbcType="VARCHAR" property="extensionName" />
+    <result column="video_size" jdbcType="BIGINT" property="videoSize" />
+    <result column="format" jdbcType="VARCHAR" property="format" />
+    <result column="buy_count" jdbcType="INTEGER" property="buyCount" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="valid" jdbcType="TINYINT" property="valid" />
+    <result column="input_time" jdbcType="BIGINT" property="inputTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+	id, account_id, video_name, extension_name, video_size, format,
+	buy_count, price, valid, input_time, update_time
+  </sql>
+  
+  <select id="queryVideoList" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List"/> 
+  	FROM t_video t 
+  </select>
+  
+</mapper>
