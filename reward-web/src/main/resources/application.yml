@@ -5,9 +5,9 @@ spring:
     name: reward-web
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.104:3306/reward_center?characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://120.78.68.228:3306/reward_web?characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&useSSL=false
     username: root
-    password: 123456
+    password: cjfvbs123
     type: com.alibaba.druid.pool.DruidDataSource
     dbcp: 
       max-active: 20

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
 import com.cjf.java.api.LoginApi;
 import com.cjf.java.api.dto.LoginDto;
 import com.cjf.java.entity.AccountEntity;
