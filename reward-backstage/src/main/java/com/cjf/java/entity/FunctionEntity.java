@@ -3,8 +3,7 @@ package com.cjf.java.entity;
 import lombok.Data;
 
 @Data
-public class MenuEntity extends BaseEntity{
-	
+public class FunctionEntity extends BaseEntity{
 	private Integer id;
 	private String menuName;
 	private Integer parentId;
@@ -15,5 +14,4 @@ public class MenuEntity extends BaseEntity{
 	private String remarks;
 	private Long insertTime;
 	private Long updateTime;
-	
 }

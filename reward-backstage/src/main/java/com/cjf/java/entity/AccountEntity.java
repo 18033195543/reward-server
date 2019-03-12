@@ -3,7 +3,7 @@ package com.cjf.java.entity;
 import lombok.Data;
 
 @Data
-public class AccountEntity {
+public class AccountEntity extends BaseEntity {
 
 	private Integer id;
 	private String accountName;
