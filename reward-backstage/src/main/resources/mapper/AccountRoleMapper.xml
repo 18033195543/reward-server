@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.java.dao.AccountRoleMapper">
+  <resultMap id="BaseResultMap" type="com.cjf.java.entity.AccountRoleEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="input_time" jdbcType="BIGINT" property="inputTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id,account_id,role_id,insert_time,update_time
+  </sql>
+  
+  
+  
+</mapper>
