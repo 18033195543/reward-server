@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class FunctionEntity extends BaseEntity{
-	private Integer id;
 	private String menuName;
 	private Integer parentId;
 	private Integer level;

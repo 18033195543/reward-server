@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class MenuEntity extends BaseEntity{
 	
-	private Integer id;
 	private String menuName;
 	private Integer parentId;
 	private Integer level;

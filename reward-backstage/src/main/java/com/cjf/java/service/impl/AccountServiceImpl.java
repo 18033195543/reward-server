@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cjf.java.api.dto.AccountDto;
 import com.cjf.java.dao.AccountMapper;
+import com.cjf.java.dao.AccountRoleMapper;
 import com.cjf.java.entity.AccountEntity;
 import com.cjf.java.entity.AccountRoleEntity;
 import com.cjf.java.service.AccountService;
@@ -21,6 +22,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private AccountMapper accountMapper;
+	
+	@Autowired
+	private AccountRoleMapper accountRoleMapper;
 	
 	@Override
 	public String updateAccount(AccountDto accountDto) {

@@ -13,6 +13,10 @@ public class JSONResult {
     public static JSONResult success(Object data ) {
         return success(data, null);
     }
+    
+    public static JSONResult success(String msg) {
+    	return success(null, msg);
+    }
 
     public static JSONResult success() {
         return success(null);
@@ -24,6 +28,10 @@ public class JSONResult {
 
     public static JSONResult fail(Object data) {
         return fail(data,null);
+    }
+    
+    public static JSONResult fail(String msg) {
+    	return fail(null,msg);
     }
 
     public static JSONResult fail() {

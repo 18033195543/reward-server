@@ -9,7 +9,10 @@ import com.cjf.java.entity.AccountEntity;
 import com.cjf.java.service.LoginService;
 import com.cjf.java.utils.Md5Util;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
