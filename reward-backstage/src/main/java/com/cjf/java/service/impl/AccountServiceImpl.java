@@ -59,8 +59,10 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void addAccount(AccountDto accountDto) {
-		// TODO Auto-generated method stub
-		
+		AccountEntity accountEntity = new AccountEntity();
+		BeanUtils.copyProperties(accountDto, accountEntity);
+// TODO 需要对密码字段进行MD5加密 		
+		int add = accountMapper.add(accountEntity);
 	}
 
 	@Override

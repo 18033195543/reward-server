@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cjf.java.api.dto.RoleDto;
 import com.cjf.java.entity.RoleEntity;
@@ -20,6 +21,7 @@ import com.kdl.common.framework.http.JSONResult;
 
 import lombok.extern.slf4j.Slf4j;
 
+@RestController
 @RequestMapping("/role")
 @Slf4j
 public class RoleController {

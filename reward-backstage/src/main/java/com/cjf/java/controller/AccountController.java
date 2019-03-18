@@ -83,6 +83,7 @@ public class AccountController {
 			logger.info("此账号已存在:{}",accountName);
 			return JSONResult.fail("此账号已存在！");
 		}
+		accountService.addAccount(accountDto);
 		
 		return JSONResult.success("新增账号成功!");
 	}

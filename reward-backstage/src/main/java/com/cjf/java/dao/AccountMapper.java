@@ -8,5 +8,9 @@ public interface AccountMapper {
 	AccountEntity getAccountByOldPasswrod(AccountDto accountDto);
 
 	int updateAccount(AccountEntity accountEntity);
+	
+	int add(AccountEntity accountEntity);
+	
+	int delete(Integer id);
 
 }
