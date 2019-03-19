@@ -45,4 +45,79 @@
 	</set>
 	where account_name = #{accountName}
   </update>
+  <insert id="add" parameterType="com.cjf.java.entity.AccountEntity">
+		insert into t_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accountName != null">
+				account_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test=accountType>
+				account_type,
+			</if>
+			<if test="accountStatus != null">
+				account_status,
+			</if>
+			<if test="inputTime != null">
+				input_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="accountName != null">
+				#{accountName},
+			</if>
+			<if test="password != null">
+				#{password},
+			</if>
+			<if test="accountType != null">
+				#{accountType},
+			</if>
+			<if test="accountStatus != null">
+				#{accountStatus},
+			</if>
+			<if test="inputTime != null">
+				#{inputTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Integer">
+  		delete from t_account where id = #{id}
+  </delete>
+  
+  <select id="getAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		t_account t where t.account_name = #{accountName,jdbcType=VARCHAR}
+		AND t.`password` = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getAccounts" parameterType="java.util.Map" resultMap="BaseResultMap">
+  		select 
+  			<include refid="Base_Column_List"/>
+  		 from t_account 
+  		 limit #{offset},#{rows}
+  </select>
+  
+  <select id="getAccounts" parameterType="java.util.List" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List"/>
+		from t_account
+		where 1=1
+		<if test="ids != null">
+			and id in
+			<foreach collection="ids" item="id" separator="," close=")" open="(">
+				#{id}
+			</foreach>
+		</if>
+  </select>
 </mapper>

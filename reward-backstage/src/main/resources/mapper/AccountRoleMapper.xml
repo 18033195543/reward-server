@@ -13,6 +13,27 @@
     id,account_id,role_id,insert_time,update_time
   </sql>
   
+  <select id="getAccountRoles" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"/>
+  	from t_account_role
+  	limit #{offset},#{rows}
+  </select>
   
+  <select id="getAccountRolesByAccountId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  		select 
+  		<include refid="Base_Column_List"/> 
+  		from t_account_role
+  		where id = #{id}
+  </select>
   
+  <insert id="addAccountRoles" parameterType="java.util.List">
+  		insert into t_account_role (account_id,role_id,insert_time)
+  		values
+  		<if test="accountRoleList != null">
+  			<foreach collection="accountRoleList" open="(" close=")" item="item" separator=",">
+  				(#{item.accountId},#{item.roleId},#{item.insertTime})
+  			</foreach>
+  		</if>
+  </insert>
 </mapper>

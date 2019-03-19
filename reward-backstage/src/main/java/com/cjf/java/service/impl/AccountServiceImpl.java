@@ -1,6 +1,9 @@
 package com.cjf.java.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,50 +64,60 @@ public class AccountServiceImpl implements AccountService {
 	public void addAccount(AccountDto accountDto) {
 		AccountEntity accountEntity = new AccountEntity();
 		BeanUtils.copyProperties(accountDto, accountEntity);
-// TODO 需要对密码字段进行MD5加密 		
+		String generatePassword = Md5Util.generatePassword(accountDto.getPassword());
+		accountEntity.setPassword(generatePassword);
 		int add = accountMapper.add(accountEntity);
 	}
 
 	@Override
 	public void deleteAccountById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		accountMapper.delete(id);
 	}
 
 	@Override
 	public AccountEntity getAccount(String name, String pwd) {
-		// TODO Auto-generated method stub
-		return null;
+		return accountMapper.getAccount(name, pwd);
 	}
 
 	@Override
-	public List<AccountEntity> getAccounts(int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AccountEntity> getAccounts(int offset, int rows) {
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		map.put("offset", offset);
+		map.put("rows", rows);
+		return accountMapper.getAccounts(map);
 	}
 
 	@Override
 	public List<AccountEntity> getAccounts(List<String> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		return accountMapper.getAccounts(ids);
 	}
 
 	@Override
-	public List<AccountRoleEntity> getAccountRoles(int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AccountRoleEntity> getAccountRoles(int offset, int rows) {
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		map.put("offset", offset);
+		map.put("rows", rows);
+		return accountRoleMapper.getAccountRoles(map);
 	}
 
 	@Override
 	public List<AccountRoleEntity> getAccountRolesByAccountId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return accountRoleMapper.getAccountRolesByAccountId(id);
 	}
 
 	@Override
 	public void addAccountRoles(Integer accountId, Integer[] roleIds) {
-		// TODO Auto-generated method stub
 		
+		Long insertTime = System.currentTimeMillis();
+		
+		List<AccountRoleEntity> accountRoleList = new ArrayList<>();
+		for (Integer roleId : roleIds) {
+			AccountRoleEntity accountRoleEntity = new AccountRoleEntity();
+			accountRoleEntity.setAccountId(accountId);
+			accountRoleEntity.setRoleId(roleId);
+			accountRoleEntity.setInsertTime(insertTime);
+			accountRoleList.add(accountRoleEntity);
+		}
+		accountRoleMapper.addAccountRoles(accountRoleList);
 	}
-
 }
