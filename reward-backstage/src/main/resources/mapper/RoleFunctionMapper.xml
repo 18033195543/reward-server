@@ -12,5 +12,42 @@
   <sql id="Base_Column_List">
     id,role_id,function_id,insert_time,update_time
   </sql>
-
+	
+  <insert id="addRoleFunction" parameterType="com.cjf.java.entity.RoleFunctionEntity">
+  		insert into t_role_function
+  		<trim prefix="(" suffix=")" suffixOverrides=",">
+	  		<if test="id != null">
+	  			id,
+	  		</if>
+	  		<if test="roleId != null">
+	  			role_id,
+	  		</if>
+	  		<if test="functionId != null">
+	  			function_id,
+	  		</if>
+	  		<if test="inputTime != null">
+	  			input_time,
+	  		</if>
+	  		<if test="updateTime != null">
+	  			update_time,
+	  		</if>
+  		</trim>
+  		<trim prefix="values(" suffix=")" suffixOverrides=",">
+	  		<if test="id != null">
+	  			id,
+	  		</if>
+	  		<if test="roleId != null">
+	  			#{roleId},
+	  		</if>
+	  		<if test="functionId != null">
+	  			#{functionId},
+	  		</if>
+	  		<if test="inputTime != null">
+	  			#{inputTime},
+	  		</if>
+	  		<if test="updateTime != null">
+	  			#{updateTime},
+	  		</if>
+  		</trim>
+  </insert>
 </mapper>

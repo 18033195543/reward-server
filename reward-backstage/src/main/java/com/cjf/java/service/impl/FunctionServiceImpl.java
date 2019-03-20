@@ -1,9 +1,13 @@
 package com.cjf.java.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cjf.java.dao.FunctionMapper;
 import com.cjf.java.entity.FunctionEntity;
 import com.cjf.java.service.FunctionService;
 
@@ -13,34 +17,39 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FunctionServiceImpl implements FunctionService {
 
+	@Autowired
+	private FunctionMapper functionMapper;
+	
 	@Override
 	public void addFunction(FunctionEntity functionEntity) {
-		// TODO Auto-generated method stub
-		
+		functionMapper.add(functionEntity);
 	}
 
 	@Override
 	public void updateUrl(Integer id, String url) {
-		// TODO Auto-generated method stub
-		
+		Map<String, Object> map = new HashMap(2);
+		map.put("id", id);
+		map.put("url", url);
+		functionMapper.updateUrl(map);	
 	}
 
 	@Override
-	public List<FunctionEntity> getFunctions(int page, int size, Integer parentId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<FunctionEntity> getFunctions(int offset, int rows, Integer parentId) {
+		Map<String, Object> map = new HashMap(3);
+		map.put("offset", offset);
+		map.put("rows", rows);
+		map.put("parentId", parentId);
+		return functionMapper.getFunctions(map);
 	}
 
 	@Override
 	public void deleteFunctionById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		functionMapper.deleteFunctionById(id);
 	}
 
 	@Override
 	public List<FunctionEntity> getAllFunction() {
-		// TODO Auto-generated method stub
-		return null;
+		return functionMapper.getAllFunction();
 	}
 
 }

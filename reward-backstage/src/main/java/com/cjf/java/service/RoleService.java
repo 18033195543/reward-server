@@ -2,6 +2,7 @@ package com.cjf.java.service;
 
 import java.util.List;
 
+import com.cjf.java.api.dto.RoleDto;
 import com.cjf.java.entity.FunctionEntity;
 import com.cjf.java.entity.RoleEntity;
 import com.cjf.java.entity.RoleFunctionEntity;
@@ -11,18 +12,18 @@ public interface RoleService {
 	/**
 	 * 保存角色信息，同时保存角色对应的功能
 	 * 
-	 * @param role
+	 * @param roleDto
 	 * @param rolefunction
 	 */
-	void addRole(RoleEntity role, List<RoleFunctionEntity> rolefunction);
+	void addRole(RoleDto roleDto);
 
 	/**
 	 * 修改角色信息，同时保存角色对应的功能
 	 * 
-	 * @param role
+	 * @param roleDto
 	 * @param rolefunction
 	 */
-	void updateRole(RoleEntity role, List<RoleFunctionEntity> rolefunction);
+	void updateRole(RoleDto roleDto);
 
 	/**
 	 * 根据id删除角色

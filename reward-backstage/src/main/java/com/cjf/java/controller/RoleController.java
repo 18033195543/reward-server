@@ -41,23 +41,11 @@ public class RoleController {
 			log.info("/addEditRole ---传入参数有误：{}",bindingResult.getFieldError().getDefaultMessage());
 			return JSONResult.fail(null, bindingResult.getFieldError().getDefaultMessage());
 		}
-		String functionIds = roleDto.getFunctionIds();
-		String[] idArray = functionIds.split(",");
-		List<RoleFunctionEntity> roleFunctionEntitys = new ArrayList<>();
-		
-		for(int i = 0; i < idArray.length; i++) {
-			RoleFunctionEntity roleFunctionEntity = new RoleFunctionEntity();
-			roleFunctionEntity.setFunctionId(Integer.valueOf(idArray[i]));
-			roleFunctionEntitys.add(roleFunctionEntity);
-		}
-		
-		RoleEntity roleEntity = new RoleEntity();
-		BeanUtils.copyProperties(roleDto, roleEntity);
-		
+	
 		if(roleDto.getId() == null) {
-			roleService.addRole(roleEntity, roleFunctionEntitys);
+			roleService.addRole(roleDto);
 		}else {
-			roleService.updateRole(roleEntity, roleFunctionEntitys);
+			roleService.updateRole(roleDto);
 		}
 		
 		return JSONResult.success(null, "操作成功!");

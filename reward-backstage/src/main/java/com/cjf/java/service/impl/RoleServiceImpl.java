@@ -1,10 +1,13 @@
 package com.cjf.java.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cjf.java.api.dto.RoleDto;
 import com.cjf.java.dao.RoleFunctionMapper;
 import com.cjf.java.dao.RoleMapper;
 import com.cjf.java.entity.FunctionEntity;
@@ -25,13 +28,30 @@ public class RoleServiceImpl implements RoleService {
 	private RoleFunctionMapper roleFunctionMapper;
 	
 	@Override
-	public void addRole(RoleEntity role, List<RoleFunctionEntity> rolefunction) {
-		// TODO Auto-generated method stub
+	public void addRole(RoleDto roleDto) {
+		String functionIds = roleDto.getFunctionIds();
+		Integer roleId = roleDto.getId();
+		String[] idArray = functionIds.split(",");
+		List<RoleFunctionEntity> roleFunctionEntitys = new ArrayList<>();
+		Long inputTime = System.currentTimeMillis();
+		for(int i = 0; i < idArray.length; i++) {
+			RoleFunctionEntity roleFunctionEntity = new RoleFunctionEntity();
+			roleFunctionEntity.setRoleId(roleId);
+			roleFunctionEntity.setFunctionId(Integer.valueOf(idArray[i]));
+			roleFunctionEntity.setInsertTime(inputTime);
+			roleFunctionEntitys.add(roleFunctionEntity);
+		}
 		
+		RoleEntity roleEntity = new RoleEntity();
+		BeanUtils.copyProperties(roleDto, roleEntity);
+		roleEntity.setInsertTime(inputTime);
+		
+		roleMapper.addRole(roleEntity);
+		roleFunctionMapper.addRoleFunction(roleFunctionEntitys);
 	}
 
 	@Override
-	public void updateRole(RoleEntity role, List<RoleFunctionEntity> rolefunction) {
+	public void updateRole(RoleDto role) {
 		// TODO Auto-generated method stub
 		
 	}

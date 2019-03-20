@@ -86,12 +86,11 @@ public class FunctionController {
 		if(Objects.equals(null, parentId)) {
 			parentId = 0;
 		}
-		
 		return JSONResult.success(functionService.getFunctions(page, rows, parentId), "查询成功!");
 	}
 	
 	/**
-	 * 
+	 * 创建菜单树
 	 * @return
 	 */
 	@PostMapping(FunctionApI.BUILD_MENU_TREE_FOR_EDIT)

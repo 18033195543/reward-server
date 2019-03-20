@@ -16,5 +16,59 @@
     id,role_name,role_describe,role_type,busi_num,order,insert_time,update_time
   </sql>
   
-  
+  <insert id="addRole" parameterType="com.cjf.java.entity.RoleEntity">
+  		insert into t_role 
+  		<trim prefix="(" suffix=")" suffixOverrides=",">
+  			<if test="id != null">
+  				id,
+  			</if>
+  			<if test="roleName != null">
+  				role_name,
+  			</if>
+  			<if test="roleDescribe != null">
+  				role_describe,
+  			</if>
+  			<if test="roleType != null">
+  				role_type,
+  			</if>
+  			<if test="busiNum != null">
+  				busi_num,
+  			</if>
+  			<if test="order != null">
+  				order,
+  			</if>
+  			<if test="inputTime != null">
+  				input_time,
+  			</if>
+  			<if test="updateTime != null">
+  				update_time,
+  			</if>
+  		</trim>
+  		<trim prefix="values(" suffix=")" suffixOverrides=",">
+  			<if test="id != null">
+  				#{id},
+  			</if>
+  			<if test="roleName != null">
+  				#{roleName},
+  			</if>
+  			<if test="roleDescribe != null">
+  				#{roleDescribe},
+  			</if>
+  			<if test="roleType != null">
+  				#{roleType},
+  			</if>
+  			<if test="busiNum != null">
+  				#{busiNum},
+  			</if>
+  			<if test="order != null">
+  				#{order},
+  			</if>
+  			<if test="inputTime != null">
+  				#{inputTime},
+  			</if>
+  			<if test="updateTime != null">
+  				#{updateTime},
+  			</if>
+  		</trim>
+  </insert>
 </mapper>

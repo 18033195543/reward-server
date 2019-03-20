@@ -19,7 +19,98 @@
     id,menu_name,parent_id,level,url,state,order,accordion,remarks,insert_time,update_time
   </sql>
   
+  <insert id="add" parameterType="com.cjf.java.entity.FunctionEntity">
+  		insert into t_function 
+  		<trim prefix="(" suffix=")" suffixOverrides=",">
+  			<if test="id != null">
+  				id,
+  			</if>
+  			<if test="menuName != null">
+  				menu_name,
+  			</if>
+  			<if test="parentId != null">
+  				parent_id,
+  			</if>
+  			<if test="level != null">
+  				level,
+  			</if>
+  			<if test="url != null">
+  				url,
+  			</if>
+  			<if test="state != null">
+  				state,
+  			</if>
+  			<if test="order != null">
+  				order,
+  			</if>
+  			<if test="accordion != null">
+  				accordion,
+  			</if>
+  			<if test="remarks != null">
+  				remarks,
+  			</if>
+  			<if test="inputTime != null">
+  				input_time,
+  			</if>
+  			<if test="updateTime != null">
+  				update_time,
+  			</if>
+  		</trim>
+  		<trim prefix="values(" suffix=")" suffixOverrides=",">
+  		<if test="id != null">
+  				id,
+  			</if>
+  			<if test="menuName != null">
+  				#{menuName},
+  			</if>
+  			<if test="parentId != null">
+  				#{parentId},
+  			</if>
+  			<if test="level != null">
+  				#{level},
+  			</if>
+  			<if test="url != null">
+  				#{url},
+  			</if>
+  			<if test="state != null">
+  				#{state},
+  			</if>
+  			<if test="order != null">
+  				#{order},
+  			</if>
+  			<if test="accordion != null">
+  				#{accordion},
+  			</if>
+  			<if test="remarks != null">
+  				#{remarks},
+  			</if>
+  			<if test="inputTime != null">
+  				#{inputTime},
+  			</if>
+  			<if test="updateTime != null">
+  				#{updateTime},
+  			</if>
+  		</trim>
+  </insert>
   
+  <update id="updateUrl" parameterType="java.util.Map">
+  		update t_function set url = #{url} where id = #{id}
+  </update>
   
+  <select id="getFunctions" parameterType="java.util.Map" resultTypeMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_function where parent_id = #{parentid} limit #{offset},#{rows}
+  </select>
+  
+  <delete id="deleteFunctionById" parameterType="java.lang.Integer">
+  		delete from t_function where id = #{id}
+  </delete>
+  
+  <select id="getAllFunction" resultMap="BaseResultMap">
+  		select 
+  		<include refid="Base_Column_List" /> 
+  		from t_function 
+  </select>
   
 </mapper>
