@@ -50,4 +50,21 @@
 	  		</if>
   		</trim>
   </insert>
+  
+  <delete id="deleteRoleFunctionById" parameterType="java.lang.Integer">
+  		delete from t_role_function where id = #{id}
+  </delete>
+  
+  <select id="findRoleFunctionByRoleIds" parameterType="java.util.List" resultMap="BaseResultMap">
+  		select 
+  		<include refid="Base_Column_List"/>
+  		from t_role_function 
+  		where 1=1
+  		<if test="roleIds != null">
+  			role_id in
+	  		<foreach collection="roleIds" open="(" close=")" item="roleId" separator=",">
+				  #{roleId}
+	  		</foreach>
+  		</if>
+  </select>
 </mapper>

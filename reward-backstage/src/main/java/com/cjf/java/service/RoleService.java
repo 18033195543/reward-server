@@ -37,7 +37,7 @@ public interface RoleService {
 	 * @param size
 	 * @return
 	 */
-	List<RoleEntity> getRoles(int page, int size);
+	List<RoleDto> getRoles(int page, int size);
 
 	/**
 	 * 根据角色id集合查询角色信息

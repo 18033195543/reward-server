@@ -1,7 +1,9 @@
 package com.cjf.java.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,30 +54,77 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void updateRole(RoleDto role) {
-		// TODO Auto-generated method stub
-		
+		Integer roleId = role.getId();
+		// 更新role
+		RoleEntity roleEntity = new RoleEntity();
+		BeanUtils.copyProperties(role, roleEntity);
+		roleMapper.updateRole(roleEntity);
+		// 删除rolefunction
+		roleFunctionMapper.deleteRoleFunctionById(roleId);
+		// 插入新的roleFunction
+		String functionIds = role.getFunctionIds();
+		String[] idArray = functionIds.split(",");
+		List<RoleFunctionEntity> roleFunctionEntitys = new ArrayList<>();
+		Long inputTime = System.currentTimeMillis();
+		for(int i = 0; i < idArray.length; i++) {
+			RoleFunctionEntity roleFunctionEntity = new RoleFunctionEntity();
+			roleFunctionEntity.setRoleId(roleId);
+			roleFunctionEntity.setFunctionId(Integer.valueOf(idArray[i]));
+			roleFunctionEntity.setInsertTime(inputTime);
+			roleFunctionEntitys.add(roleFunctionEntity);
+		}
+		roleFunctionMapper.addRoleFunction(roleFunctionEntitys);
 	}
 
 	@Override
 	public void deleteRole(Integer roleId) {
-		// TODO Auto-generated method stub
-		
+		roleMapper.deleteRole(roleId);		
+		roleFunctionMapper.deleteRoleFunctionById(roleId);		
 	}
 
 	@Override
-	public List<RoleEntity> getRoles(int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RoleDto> getRoles(int offset, int rows) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset",offset);
+		map.put("rows",rows);
+		List<RoleEntity> roles = roleMapper.getRoles(map);
+		List<Integer> roleIds = new ArrayList<>();
+		List<RoleDto> roleDtos = new ArrayList<>();
+		
+		roles.forEach((role)->{
+			roleIds.add(role.getId());
+			RoleDto roleDto = new RoleDto();
+			BeanUtils.copyProperties(role, roleDto);
+			roleDtos.add(roleDto);
+		});
+		
+		List<RoleFunctionEntity> roleFunctions = roleFunctionMapper.findRoleFunctionByRoleIds(roleIds);
+		if(roles != null && roles.size() > 0 && roleFunctions != null && roleFunctions.size() > 0) {
+			
+			roleDtos.forEach((item)->{
+				StringBuffer sb = new StringBuffer();
+				roleFunctions.forEach((roleFunction)->{
+					if(item.getId() == roleFunction.getRoleId()) {
+						sb.append(roleFunction.getId()).append(",");
+					}
+				});
+				if(sb.length() > 1) {
+					item.setFunctionIds(sb.deleteCharAt(sb.length()-1).toString());
+				}
+			});
+			
+		}
+		
+		return roleDtos;
 	}
 
 	@Override
 	public List<RoleEntity> getRoles(List<Integer> ids) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<FunctionEntity> getRoleFunctions(Integer AccountIdO) {
+	public List<FunctionEntity> getRoleFunctions(Integer AccountId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

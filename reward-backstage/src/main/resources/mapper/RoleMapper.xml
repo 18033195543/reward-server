@@ -71,4 +71,43 @@
   			</if>
   		</trim>
   </insert>
+  
+  <update id="updateRole" parameterType="com.cjf.java.entity.RoleEntity">
+  		update t_role  
+  		<set>
+			<if test="roleName != null">
+				role_name = #{roleName},
+			</if>
+			<if test="roleDescribe != null">
+				role_describe = #{roleDescribe},
+			</if>
+			<if test="roleType != null">
+				role_type = #{roleType},
+			</if>
+			<if test="busiNum != null">
+				busi_num = #{busiNum},
+			</if>
+			<if test="order != null">
+				order = #{order},
+			</if>
+			<if test="inputTime != null">
+				input_time = #{inputTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+		where id = #{id}
+  </update>
+  
+  <delete id="deleteRole" parameterType="java.lang.Integer">
+		delete from t_role where id = #{id}
+  </delete>
+  
+  <select id="getRoles" parameterType="java.util.Map" resultMap="BaseResultMap"> 
+  		select 
+  		<include refid="Base_Column_List"/>
+  		from t_role
+  		limit #{offset}, #{rows}
+  </select>
 </mapper>

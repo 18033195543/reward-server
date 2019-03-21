@@ -31,7 +31,7 @@ public class RoleController {
 	
 	@GetMapping("/getRoles")
 	public JSONResult getRoles(Integer page, Integer rows) {
-		List<RoleEntity> roles = roleService.getRoles(page, rows);
+		List<RoleDto> roles = roleService.getRoles(page, rows);
 		return JSONResult.success(roles, "获取角色成功!");
 	}
 	
