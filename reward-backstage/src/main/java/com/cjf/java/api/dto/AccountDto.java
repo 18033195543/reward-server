@@ -3,10 +3,12 @@ package com.cjf.java.api.dto;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.cjf.java.entity.BaseEntity;
+
 import lombok.Data;
 
 @Data
-public class AccountDto {
+public class AccountDto extends BaseEntity{
 
 	@NotBlank(message="用户名不能为空")
 	@Length(max=20,min=1,message="用户名只能为1-20的长度")

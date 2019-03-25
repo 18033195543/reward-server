@@ -12,4 +12,6 @@ public interface RoleFunctionMapper {
 
 	List<RoleFunctionEntity> findRoleFunctionByRoleIds(List<Integer> roleIds);
 
+	List<RoleFunctionEntity> getRoleFunctions(Integer roleId);
+
 }

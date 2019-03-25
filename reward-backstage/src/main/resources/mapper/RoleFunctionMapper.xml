@@ -67,4 +67,12 @@
 	  		</foreach>
   		</if>
   </select>
+  
+  <select id="getRoleFunctions" parameterType="java.lang.Integer" resultMap="BaseResultMap"> 
+  		select 
+  		<include refid="Base_Column_List"/> 
+  		from t_role_function 
+  		where 
+  		id = #{roleId}
+  </select>
 </mapper>

@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cjf.java.api.dto.RoleDto;
+import com.cjf.java.dao.AccountRoleMapper;
 import com.cjf.java.dao.RoleFunctionMapper;
 import com.cjf.java.dao.RoleMapper;
+import com.cjf.java.entity.AccountRoleEntity;
 import com.cjf.java.entity.FunctionEntity;
 import com.cjf.java.entity.RoleEntity;
 import com.cjf.java.entity.RoleFunctionEntity;
@@ -28,6 +30,9 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
 	private RoleFunctionMapper roleFunctionMapper;
+	
+	@Autowired
+	private AccountRoleMapper accountRoleMapper;
 	
 	@Override
 	public void addRole(RoleDto roleDto) {
@@ -124,9 +129,23 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<FunctionEntity> getRoleFunctions(Integer AccountId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RoleFunctionEntity> getRoleFunctionsByAccountId(Integer AccountId) {
+		List<AccountRoleEntity> accountRolesByAccountId = accountRoleMapper.getAccountRolesByAccountId(AccountId);
+		List<Integer> roleIds = new ArrayList<>();
+		accountRolesByAccountId.forEach((ar)->{
+			roleIds.add(ar.getId());
+		});
+		
+		if(roleIds != null && roleIds.size() > 0) {
+			return roleFunctionMapper.findRoleFunctionByRoleIds(roleIds);
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<RoleFunctionEntity> getRoleFunctions(Integer roleId) {
+		return roleFunctionMapper.getRoleFunctions(roleId);
 	}
 
 }

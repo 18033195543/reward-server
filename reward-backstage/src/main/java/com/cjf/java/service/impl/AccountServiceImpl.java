@@ -88,7 +88,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<AccountEntity> getAccounts(List<String> ids) {
+	public List<AccountEntity> getAccounts(List<Integer> ids) {
 		return accountMapper.getAccounts(ids);
 	}
 

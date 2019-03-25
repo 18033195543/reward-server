@@ -42,27 +42,27 @@ public interface AccountService {
 	/**
 	 * 分页查询用户信息
 	 * 
-	 * @param page
-	 * @param size
+	 * @param offset
+	 * @param rows
 	 * @return
 	 */
-	List<AccountEntity> getAccounts(int page, int size);
+	List<AccountEntity> getAccounts(int offset, int rows);
 
 	/**
 	 * 根据id集合查询用户信息
-	 * @param page
-	 * @param size
+	 * @param offset
+	 * @param rows
 	 * @return
 	 */
-	List<AccountEntity> getAccounts(List<String> ids);
+	List<AccountEntity> getAccounts(List<Integer> ids);
 	
 	/**
 	 * 分页查询用户角色对应关系
-	 * @param page
-	 * @param size
+	 * @param offset
+	 * @param rows
 	 * @return
 	 */
-	List<AccountRoleEntity> getAccountRoles(int page, int size);
+	List<AccountRoleEntity> getAccountRoles(int offset, int rows);
 	
 	/**
 	 * 根据用户id查询用户对应角色关系

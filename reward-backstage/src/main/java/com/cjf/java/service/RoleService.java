@@ -48,10 +48,17 @@ public interface RoleService {
 	List<RoleEntity> getRoles(List<Integer> ids);
 	
 	/**
-	 * 根据用户id查询用户功能对应关系
-	 * @param AccountIdO
+	 * 根据用户角色id查询用户功能对应关系
+	 * @param AccountId
 	 * @return
 	 */
-	List<FunctionEntity> getRoleFunctions(Integer AccountIdO);
+	List<RoleFunctionEntity> getRoleFunctions(Integer roleId);
+
+	/**
+	 * 根据账号id查询角色权限信息
+	 * @param AccountId
+	 * @return
+	 */
+	List<RoleFunctionEntity> getRoleFunctionsByAccountId(Integer AccountId);
 	
 }
