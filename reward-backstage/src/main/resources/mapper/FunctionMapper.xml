@@ -3,7 +3,7 @@
 <mapper namespace="com.cjf.java.dao.FunctionMapper">
   <resultMap id="BaseResultMap" type="com.cjf.java.entity.FunctionEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="function_Name" jdbcType="VARCHAR" property="FunctionName" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="level" jdbcType="TINYINT" property="level" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -16,7 +16,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id,menu_name,parent_id,level,url,state,order,accordion,remarks,insert_time,update_time
+    id,function_Name,parent_id,`level`,url,state,`order`,accordion,remarks,insert_time,update_time
   </sql>
   
   <insert id="add" parameterType="com.cjf.java.entity.FunctionEntity">
@@ -25,14 +25,14 @@
   			<if test="id != null">
   				id,
   			</if>
-  			<if test="menuName != null">
-  				menu_name,
+  			<if test="FunctionName != null">
+  				function_Name,
   			</if>
   			<if test="parentId != null">
   				parent_id,
   			</if>
   			<if test="level != null">
-  				level,
+  				`level`,
   			</if>
   			<if test="url != null">
   				url,
@@ -41,7 +41,7 @@
   				state,
   			</if>
   			<if test="order != null">
-  				order,
+  				`order`,
   			</if>
   			<if test="accordion != null">
   				accordion,
@@ -60,8 +60,8 @@
   		<if test="id != null">
   				id,
   			</if>
-  			<if test="menuName != null">
-  				#{menuName},
+  			<if test="FunctionName != null">
+  				#{FunctionName},
   			</if>
   			<if test="parentId != null">
   				#{parentId},
@@ -97,7 +97,7 @@
   		update t_function set url = #{url} where id = #{id}
   </update>
   
-  <select id="getFunctions" parameterType="java.util.Map" resultTypeMap="BaseResultMap">
+  <select id="getFunctions" parameterType="java.util.Map" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from t_function where parent_id = #{parentid} limit #{offset},#{rows}
@@ -107,7 +107,7 @@
   		delete from t_function where id = #{id}
   </delete>
   
-  <select id="getAllFunction" resultMap="BaseResultMap">
+  <select id="getAllFunction" resultMap="BaseResultMap" parameterType="java.util.Map">
   		select 
   		<include refid="Base_Column_List" /> 
   		from t_function 

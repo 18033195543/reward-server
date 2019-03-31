@@ -16,11 +16,12 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.cjf.java.api.LoginApi;
 import com.cjf.java.api.dto.Accordion;
@@ -38,7 +39,7 @@ import com.cjf.java.service.LoginService;
 import com.cjf.java.service.RoleService;
 import com.kdl.common.framework.http.JSONResult;
 
-@RestController
+@Controller
 @RequestMapping(LoginApi.BASEAPI)
 public class LoginController {
 
@@ -94,12 +95,36 @@ public class LoginController {
 		return JSONResult.success(null, "退出成功！");
 
 	}
-	
+
 	@RequestMapping(value = LoginApi.LOGINOUT)
 	public JSONResult loginOut(HttpServletRequest request) {
 		LoginAccountCache.remove();
 		return JSONResult.success(null, "退出成功！");
 
+	}
+
+	/**
+	 * 跳转登录页面
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = LoginApi.LOGIN_PAGE, method = RequestMethod.GET)
+	public String loginPage(ModelMap map) {
+		System.out.println("ok--------------------------------------");
+		return "login";
+	}
+	
+	/**
+	 * 跳转登录页面
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index(ModelMap map) {
+		System.out.println("ok--------------------------------------");
+		return "index";
 	}
 
 	/**
@@ -110,7 +135,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = LoginApi.LOGIN, method = RequestMethod.POST)
+	// @RequestMapping(value = LoginApi.LOGIN, method = RequestMethod.POST)
 	public JSONResult login(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult,
 			HttpServletRequest request) {
 
@@ -120,33 +145,33 @@ public class LoginController {
 		}
 
 		try {
-			
-		AccountEntity account = accountService.getAccount(loginDto.getAccountName(), loginDto.getPassword());
 
-		if (account == null) {
-			logger.info("用户名密码错误！accountName:{}", loginDto.getAccountName());
-			return JSONResult.fail(null, "用户名密码错误！");
-		}
+			AccountEntity account = accountService.getAccount(loginDto.getAccountName(), loginDto.getPassword());
 
-		// 缓存用户信息
-		LoginAccountCache.put(account, 30 * 60);
-
-		if (Objects.equals("admin", account.getAccountName())) {
-			return JSONResult.success(getAccordions(true, null), "登录成功!");
-		} else {
-			List<AccountRoleEntity> accountRoles = accountService.getAccountRolesByAccountId(account.getId());
-			if (null == accountRoles || 0 == accountRoles.size()) {
-				return JSONResult.fail("登录失败!");
+			if (account == null) {
+				logger.info("用户名密码错误！accountName:{}", loginDto.getAccountName());
+				return JSONResult.fail(null, "用户名密码错误！");
 			}
-			List<Integer> roleIds = new ArrayList<Integer>();
-			for (AccountRoleEntity ar : accountRoles) {
-				roleIds.add(ar.getId());
+
+			// 缓存用户信息
+			LoginAccountCache.put(account, 30 * 60);
+
+			if (Objects.equals("admin", account.getAccountName())) {
+				return JSONResult.success(getAccordions(true, null), "登录成功!");
+			} else {
+				List<AccountRoleEntity> accountRoles = accountService.getAccountRolesByAccountId(account.getId());
+				if (null == accountRoles || 0 == accountRoles.size()) {
+					return JSONResult.fail("登录失败!");
+				}
+				List<Integer> roleIds = new ArrayList<Integer>();
+				for (AccountRoleEntity ar : accountRoles) {
+					roleIds.add(ar.getId());
+				}
+				List<RoleEntity> roles = roleService.getRoles(roleIds);
+				nativeCache.setRoles(account.getId(), roles);
+				return JSONResult.success(getAccordions(false, account.getId()), "登录成功!");
 			}
-			List<RoleEntity> roles = roleService.getRoles(roleIds);
-			nativeCache.setRoles(account.getId(), roles);
-			return JSONResult.success(getAccordions(false, account.getId()), "登录成功!");
-		}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LoginAccountCache.remove();
 			return JSONResult.fail("登录失败!");
 		}

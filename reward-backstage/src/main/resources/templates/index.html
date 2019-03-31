@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+	function submit(){
+		alert('ok');
+	}
+</script>
+<body>
+
+	<div>
+		<form action="index.test" method="get">
+			<table>
+				<tr>
+					<td>账号:</td>
+					<td><input type="text" id="account" name="account"
+						value="${number!''}" /></td>
+				</tr>
+				<tr>
+					<td>密码:</td>
+					<td><input type="password" id="password" name="password"
+						value="${number1!''}" /></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="登录" id="submit" onclik="submit()" /></td>
+					<td></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</body>
+</html>

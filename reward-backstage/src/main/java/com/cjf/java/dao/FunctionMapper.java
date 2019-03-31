@@ -15,6 +15,6 @@ public interface FunctionMapper {
 
 	void deleteFunctionById(Integer id);
 
-	List<FunctionEntity> getAllFunction();
+	List<FunctionEntity> getAllFunction(Map map);
 
 }

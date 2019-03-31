@@ -8,6 +8,12 @@ public interface LoginApi {
 	 */
 	String LOGIN = "/login";
 	
+	/**
+	 * 登录
+	 */
+	String LOGIN_PAGE = "/loginPage";
+	
+	
 	String LOGIN_OLD = "/loginOld";
 	
 	/**

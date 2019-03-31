@@ -25,7 +25,11 @@ public class AuthFilter extends OncePerRequestFilter{
 
 	private static String [] EXCLUDES = {
 			"/login/login",
-			"/login/loginOut"
+			"/login/loginOut",
+			"/login/loginPage",
+			"/favicon.ico",
+			".js",
+			".css"
 			};
 	
 	@Override

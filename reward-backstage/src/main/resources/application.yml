@@ -1,8 +1,20 @@
 server: 
   port: 8081
-spring: 
-  application:
-    name: reward-web
+spring:
+#freemarker配置
+  freemarker:
+    cache: false
+    check-template-location: true
+    content-type: text/html; charset=utf-8
+    suffix: .ftl
+    template-loader-path:
+    - classpath:/templates/
+  mvc:
+  #静态资源配置
+    static-path-pattern: /static/**
+  #application:
+    #name: reward-web
+    #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://120.78.68.228:3306/reward_backstage?characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&useSSL=false

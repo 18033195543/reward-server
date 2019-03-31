@@ -13,7 +13,7 @@ public class Tree {
 	private Node root = null;//根节点	
 	public Tree(List<FunctionEntity> functions){
 		for(FunctionEntity function:functions){
-			Node node = new Node(function.getId(),function.getParentId(),function.getMenuName(),"open",
+			Node node = new Node(function.getId(),function.getParentId(),function.getFunctionName(),"open",
 					new NodeAttribute(null==function.getUrl()?"":function.getUrl(),function.getId()),
 					function.getOrder());
 			nodes.add(node);			

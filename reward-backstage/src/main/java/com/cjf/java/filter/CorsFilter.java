@@ -52,6 +52,7 @@ public class CorsFilter implements Filter {
 			
 			
 		}
+		String requestURI = ((HttpServletRequest) request).getRequestURI();
 		chain.doFilter(request, response);
 	}
 

@@ -49,7 +49,7 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	public List<FunctionEntity> getAllFunction() {
-		return functionMapper.getAllFunction();
+		return functionMapper.getAllFunction(new HashMap());
 	}
 
 }

@@ -20,6 +20,6 @@ public interface AccountMapper {
 	
 	List<AccountEntity> getAccounts(Map map);
 
-	List<AccountEntity> getAccounts(List<Integer> ids);
+	List<AccountEntity> getAccountsByIds(List<Integer> ids);
 
 }

@@ -54,7 +54,7 @@
 			<if test="password != null">
 				password,
 			</if>
-			<if test=accountType>
+			<if test="accountType">
 				account_type,
 			</if>
 			<if test="accountStatus != null">
@@ -108,7 +108,7 @@
   		 limit #{offset},#{rows}
   </select>
   
-  <select id="getAccounts" parameterType="java.util.List" resultMap="BaseResultMap">
+  <select id="getAccountsByIds" parameterType="java.util.List" resultMap="BaseResultMap">
 		select
 			<include refid="Base_Column_List"/>
 		from t_account
