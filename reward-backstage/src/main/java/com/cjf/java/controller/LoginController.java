@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cjf.java.api.LoginApi;
 import com.cjf.java.api.dto.Accordion;
@@ -114,7 +115,7 @@ public class LoginController {
 		System.out.println("ok--------------------------------------");
 		return "login";
 	}
-	
+
 	/**
 	 * 跳转登录页面
 	 * 
@@ -135,7 +136,8 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	// @RequestMapping(value = LoginApi.LOGIN, method = RequestMethod.POST)
+	@RequestMapping(value = LoginApi.LOGIN, method = RequestMethod.POST)
+	@ResponseBody
 	public JSONResult login(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult,
 			HttpServletRequest request) {
 
@@ -173,6 +175,8 @@ public class LoginController {
 			}
 		} catch (Exception e) {
 			LoginAccountCache.remove();
+			logger.error("登录失败!原因:{}",e.getMessage());
+			e.printStackTrace();
 			return JSONResult.fail("登录失败!");
 		}
 	}

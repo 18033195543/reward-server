@@ -12,7 +12,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, account_name, password, account_type, account_status, input_time, update_time
+    id, account_name, `password`, account_type, account_status, input_time, update_time
   </sql>
   <select id="getAccountByOldPasswrod" parameterType="com.cjf.java.api.dto.AccountDto" resultMap="BaseResultMap">
 	select 
@@ -93,12 +93,12 @@
   		delete from t_account where id = #{id}
   </delete>
   
-  <select id="getAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
+  <select id="getAccount" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" /> 
 		from
-		t_account t where t.account_name = #{accountName,jdbcType=VARCHAR}
-		AND t.`password` = #{password,jdbcType=VARCHAR}
+		t_account t where t.account_name = #{name,jdbcType=VARCHAR}
+		AND t.`password` = #{pwd,jdbcType=VARCHAR}
   </select>
   
   <select id="getAccounts" parameterType="java.util.Map" resultMap="BaseResultMap">

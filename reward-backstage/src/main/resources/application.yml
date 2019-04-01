@@ -6,7 +6,7 @@ spring:
     cache: false
     check-template-location: true
     content-type: text/html; charset=utf-8
-    suffix: .ftl
+    suffix: .html
     template-loader-path:
     - classpath:/templates/
   mvc:

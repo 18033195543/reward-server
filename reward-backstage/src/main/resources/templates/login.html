@@ -20,12 +20,13 @@
 
 
         function login() {
-            httpUtils.post("admin/login", {
-                userId : $("#userId").val(),
+            httpUtils.post("login", {
+                accountName : $("#accountName").val(),
                 password: $("#password").val()
-            }, function(err){
-                if(!err) {
-                    window.location.href = "index.html";
+            }, function(data){
+            	alert(data.msg);
+                if(data.code == 0) {
+                    window.location.href = "index";
                 } else {
                     alert("用户名或密码错误！");
                 }
@@ -34,13 +35,13 @@
     </script>
 </head>
 <body>
-<div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',modal:true,resizable:false,closable:false"
+<div id="dlg" class="easyui-dialog" title="打赏系统登录" data-options="iconCls:'icon-save',modal:true,resizable:false,closable:false"
      style="width:400px;height:200px;padding:10px">
     <form>
         <table style="width: 100%">
             <tr>
                 <td>用户名</td>
-                <td><input class="easyui-textbox" name="userId" id="userId"/></td>
+                <td><input class="easyui-textbox" name="accountName" id="accountName"/></td>
             </tr>
             <tr>
                 <td>密码</td>

@@ -76,7 +76,11 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public AccountEntity getAccount(String name, String pwd) {
-		return accountMapper.getAccount(name, pwd);
+		String generatePassword = Md5Util.generatePassword(pwd);
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		map.put("name", name);
+		map.put("pwd",generatePassword);
+		return accountMapper.getAccount(map);
 	}
 
 	@Override

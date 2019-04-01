@@ -27,9 +27,9 @@ public class AuthFilter extends OncePerRequestFilter{
 			"/login/login",
 			"/login/loginOut",
 			"/login/loginPage",
-			"/favicon.ico",
+			".css",
 			".js",
-			".css"
+			".ico"
 			};
 	
 	@Override

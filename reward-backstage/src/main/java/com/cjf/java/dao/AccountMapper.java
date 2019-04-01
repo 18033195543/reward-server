@@ -16,7 +16,7 @@ public interface AccountMapper {
 	
 	int delete(Integer id);
 	
-	AccountEntity getAccount(String name, String pwd);
+	AccountEntity getAccount(Map map);
 	
 	List<AccountEntity> getAccounts(Map map);
 
