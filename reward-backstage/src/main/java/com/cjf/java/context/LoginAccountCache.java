@@ -1,52 +1,50 @@
 package com.cjf.java.context;
 
-import java.util.Calendar;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
+import com.cjf.java.api.dto.Accordion;
 import com.cjf.java.entity.AccountEntity;
 
 public class LoginAccountCache {
 
-	private static Map<Integer, LoginAccount> cache = new HashMap<Integer,LoginAccount>();
+	private static Map<String, AccountEntity> cache = new HashMap<String,AccountEntity>();
+	private static Map<String, List<Accordion>> accountAccordionsMap = new HashMap<String, List<Accordion>>();
 	
-	public static AccountEntity get() {
-		return null;
-		
+	
+	public static void put(AccountEntity account) {
+		cache.put(account.getAccountName(), account);
+		AccountContext.setCurrent(account);
+		setCookie(account);
 	}
 	
-	/**
-	 * 
-	 * @param account
-	 * @param expire 单位秒，如果是30分钟过期，即：60*30=1800
-	 */
-	public static void put (AccountEntity account,long expire) {
-		long expireTime = Calendar.getInstance().getTime().getTime() + expire * 1000;
-		LoginAccount loginAccount = new LoginAccount();
-		loginAccount.setExpire(expire);
-		loginAccount.setAccountEntity(account);
-		cache.put(account.getId(), loginAccount);
+	public static void setCookie(AccountEntity account) {
+		int expire = 1800;
+		String source = account.getAccountName()+"$"+account.getPassword();
+		byte[] result = Base64.getEncoder().encode(source.getBytes());
+		Cookie cookie = new Cookie("auth", new String(result));
+		cookie.setMaxAge(expire);
+		ResponseContext.getCurrent().addCookie(cookie);
 	}
 
-	public static void remove() {
-		
+	public static void remove(String name) {
+		cache.remove(name);
+		Cookie cookie = new Cookie("auth", null);
+		ResponseContext.getCurrent().addCookie(cookie);
+		AccountContext.setCurrent(null);
 	}
 	
-	private static class LoginAccount{
-		private long expire;
-		private AccountEntity accountEntity;
-		public long getExpire() {
-			return expire;
-		}
-		public void setExpire(long expire) {
-			this.expire = expire;
-		}
-		public AccountEntity getAccountEntity() {
-			return accountEntity;
-		}
-		public void setAccountEntity(AccountEntity accountEntity) {
-			this.accountEntity = accountEntity;
-		}
-		
+	public static void setAccordions(String accountName, List<Accordion> accordions) {
+		accountAccordionsMap.put(accountName, accordions);
+	} 
+	
+	public static void getAccordions(String accountName) {
+		accountAccordionsMap.get(accountName);
 	}
+
+
 }

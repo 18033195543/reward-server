@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cjf.java.api.LoginApi;
 import com.cjf.java.api.dto.Accordion;
 import com.cjf.java.api.dto.LoginDto;
+import com.cjf.java.context.AccountContext;
 import com.cjf.java.context.LoginAccountCache;
 import com.cjf.java.context.NativeCache;
 import com.cjf.java.entity.AccountEntity;
@@ -99,7 +100,7 @@ public class LoginController {
 
 	@RequestMapping(value = LoginApi.LOGINOUT)
 	public JSONResult loginOut(HttpServletRequest request) {
-		LoginAccountCache.remove();
+		LoginAccountCache.remove(AccountContext.getCurrent().getAccount().getAccountName());
 		return JSONResult.success(null, "退出成功！");
 
 	}
@@ -146,17 +147,17 @@ public class LoginController {
 			return JSONResult.fail(null, bindingResult.getFieldError().getDefaultMessage());
 		}
 
+		AccountEntity account = accountService.getAccount(loginDto.getAccountName(), loginDto.getPassword());
+		
+		if (account == null) {
+			logger.info("用户名密码错误！accountName:{}", loginDto.getAccountName());
+			return JSONResult.fail(null, "用户名密码错误！");
+		}
 		try {
 
-			AccountEntity account = accountService.getAccount(loginDto.getAccountName(), loginDto.getPassword());
 
-			if (account == null) {
-				logger.info("用户名密码错误！accountName:{}", loginDto.getAccountName());
-				return JSONResult.fail(null, "用户名密码错误！");
-			}
-
-			// 缓存用户信息
-			LoginAccountCache.put(account, 30 * 60);
+			// 缓存用户信息 换成用cookie
+//			LoginAccountCache.put(account, 30 * 60); 
 
 			if (Objects.equals("admin", account.getAccountName())) {
 				return JSONResult.success(getAccordions(true, null), "登录成功!");
@@ -171,10 +172,14 @@ public class LoginController {
 				}
 				List<RoleEntity> roles = roleService.getRoles(roleIds);
 				nativeCache.setRoles(account.getId(), roles);
-				return JSONResult.success(getAccordions(false, account.getId()), "登录成功!");
+				//如果是大型电商网站应该把缓存放到redis等缓存服务器上
+				LoginAccountCache.put(account);
+				List<Accordion> accordions = getAccordions(false, account.getId());
+				LoginAccountCache.setAccordions(account.getAccountName(), accordions);
+				return JSONResult.success(accordions, "登录成功!");
 			}
 		} catch (Exception e) {
-			LoginAccountCache.remove();
+			LoginAccountCache.remove(account.getAccountName());
 			logger.error("登录失败!原因:{}",e.getMessage());
 			e.printStackTrace();
 			return JSONResult.fail("登录失败!");
