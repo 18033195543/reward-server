@@ -160,6 +160,7 @@ public class LoginController {
 //			LoginAccountCache.put(account, 30 * 60); 
 
 			if (Objects.equals("admin", account.getAccountName())) {
+				
 				return JSONResult.success(getAccordions(true, null), "登录成功!");
 			} else {
 				List<AccountRoleEntity> accountRoles = accountService.getAccountRolesByAccountId(account.getId());

@@ -12,7 +12,7 @@ public class AccountContext {
 		this.account = account;
 	}
 	
-	static void setCurrent(AccountEntity account) {
+	public static void setCurrent(AccountEntity account) {
 		tl.set(new AccountContext(account));
 	}
 	

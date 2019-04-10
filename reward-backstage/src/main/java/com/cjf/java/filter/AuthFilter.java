@@ -19,7 +19,7 @@ import com.cjf.java.entity.AccountEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+//@Component
 @Slf4j
 public class AuthFilter extends OncePerRequestFilter{
 

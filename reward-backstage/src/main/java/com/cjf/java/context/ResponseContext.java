@@ -2,7 +2,7 @@ package com.cjf.java.context;
 
 import javax.servlet.http.HttpServletResponse;
 
-class ResponseContext {
+public class ResponseContext {
 
 	private static ThreadLocal <HttpServletResponse> tl = new ThreadLocal<>();
 	

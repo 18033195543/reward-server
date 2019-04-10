@@ -22,6 +22,10 @@ public class LoginAccountCache {
 		setCookie(account);
 	}
 	
+	public static AccountEntity get(String key) {
+		return cache.get(key);
+	}
+	
 	public static void setCookie(AccountEntity account) {
 		int expire = 1800;
 		String source = account.getAccountName()+"$"+account.getPassword();
@@ -42,8 +46,8 @@ public class LoginAccountCache {
 		accountAccordionsMap.put(accountName, accordions);
 	} 
 	
-	public static void getAccordions(String accountName) {
-		accountAccordionsMap.get(accountName);
+	public static List<Accordion> getAccordions(String accountName) {
+		return accountAccordionsMap.get(accountName);
 	}
 
 
