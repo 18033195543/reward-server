@@ -31,6 +31,7 @@ public class LoginAccountCache {
 		String source = account.getAccountName()+"$"+account.getPassword();
 		byte[] result = Base64.getEncoder().encode(source.getBytes());
 		Cookie cookie = new Cookie("auth", new String(result));
+		cookie.setPath("/");
 		cookie.setMaxAge(expire);
 		ResponseContext.getCurrent().addCookie(cookie);
 	}

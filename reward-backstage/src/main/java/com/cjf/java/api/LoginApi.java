@@ -6,7 +6,7 @@ public interface LoginApi {
 	/**
 	 * 登录
 	 */
-	String LOGIN = "/login";
+	String AUTH = "/auth";
 	
 	/**
 	 * 登录

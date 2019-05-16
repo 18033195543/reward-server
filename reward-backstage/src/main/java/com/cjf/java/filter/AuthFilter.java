@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthFilter extends OncePerRequestFilter{
 
 	private static String [] EXCLUDES = {
-			"/login/login",
+			"/login/auth",
 			"/login/loginOut",
 			"/login/loginPage",
 			".css",

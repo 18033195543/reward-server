@@ -42,22 +42,24 @@ public class AccountContextFilter implements Filter {
 
 		ResponseContext.setCurrent(response);
 
-		if (request.getRequestURI().contains("/login/login") ) {
-			Cookie cookie = new Cookie("auth", null);
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
+		if (request.getRequestURI().contains("/login/loginPage")) {
 			chain.doFilter(request, response);
 			return;
 		}
 
-		if (request.getRequestURI().contains("/login/loginPage")) {
+		if (request.getRequestURI().contains("/login/auth")) {
+			Cookie cookie = new Cookie("auth", null);
+			cookie.setMaxAge(0);
+			cookie.setPath("/");
+			response.addCookie(cookie);
 			chain.doFilter(request, response);
 			return;
 		}
 
 		if (request.getRequestURI().endsWith(".css") || request.getRequestURI().endsWith(".js")
 				|| request.getRequestURI().endsWith(".ico") || request.getRequestURI().endsWith(".jpg")
-				|| request.getRequestURI().endsWith(".gif")) {
+				|| request.getRequestURI().endsWith(".gif") || request.getRequestURI().endsWith(".png")
+				|| request.getRequestURI().endsWith(".map")) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -79,6 +81,7 @@ public class AccountContextFilter implements Filter {
 		if (2 == split.length) {
 			AccountEntity account = LoginAccountCache.get(split[0]);
 			if (null == account) {
+				// WebApplicationContext.getBean();
 				account = LoginAccountCache.get(split[0]);
 			}
 			if (null != account && Objects.equals(account.getPassword(), split[1])) {
@@ -94,13 +97,13 @@ public class AccountContextFilter implements Filter {
 				response.addCookie(cookie);
 				response.sendRedirect("/login/loginPage");
 			}
-		} else {
+		} else { // 如果从cookic里拿出来的认证为空则直接跳转到登录页面
 			Cookie cookie = new Cookie("auth", null);
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 			response.sendRedirect("/login/loginPage");
 		}
-		chain.doFilter(request, response);
+		 chain.doFilter(request, response);
 	}
 
 	@Override

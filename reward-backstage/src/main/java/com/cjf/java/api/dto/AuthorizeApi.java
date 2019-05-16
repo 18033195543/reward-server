@@ -12,4 +12,6 @@ public interface AuthorizeApi {
 	
 	
 	String SET_AUTHORIZE = "/setAuthorize";
+	
+	String ACCOUNT_LIST = "/accountList";
 }

@@ -20,7 +20,7 @@
 
 
         function login() {
-            httpUtils.post("login", {
+            httpUtils.post("auth", {
                 accountName : $("#accountName").val(),
                 password: $("#password").val()
             }, function(data){

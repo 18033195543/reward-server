@@ -7,12 +7,11 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.cjf.java.api.AccountApi;
 import com.cjf.java.api.dto.AccountDto;
@@ -20,7 +19,7 @@ import com.cjf.java.entity.AccountEntity;
 import com.cjf.java.service.AccountService;
 import com.kdl.common.framework.http.JSONResult;
 
-@RestController
+@Controller
 @RequestMapping(AccountApi.BASEAPI)
 public class AccountController {
 

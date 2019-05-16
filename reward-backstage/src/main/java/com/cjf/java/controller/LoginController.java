@@ -118,7 +118,7 @@ public class LoginController {
 	}
 
 	/**
-	 * 跳转登录页面
+	 * 跳转主页面
 	 * 
 	 * @param map
 	 * @return
@@ -137,7 +137,7 @@ public class LoginController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = LoginApi.LOGIN, method = RequestMethod.POST)
+	@RequestMapping(value = LoginApi.AUTH, method = RequestMethod.POST)
 	@ResponseBody
 	public JSONResult login(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult,
 			HttpServletRequest request) {
@@ -160,7 +160,7 @@ public class LoginController {
 //			LoginAccountCache.put(account, 30 * 60); 
 
 			if (Objects.equals("admin", account.getAccountName())) {
-				
+				LoginAccountCache.put(account);
 				return JSONResult.success(getAccordions(true, null), "登录成功!");
 			} else {
 				List<AccountRoleEntity> accountRoles = accountService.getAccountRolesByAccountId(account.getId());
