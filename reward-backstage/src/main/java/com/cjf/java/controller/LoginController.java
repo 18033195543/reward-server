@@ -16,13 +16,13 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cjf.java.api.LoginApi;
 import com.cjf.java.api.dto.Accordion;
@@ -41,7 +41,7 @@ import com.cjf.java.service.LoginService;
 import com.cjf.java.service.RoleService;
 import com.kdl.common.framework.http.JSONResult;
 
-@Controller
+@RestController
 @RequestMapping(LoginApi.BASEAPI)
 public class LoginController {
 
@@ -139,7 +139,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = LoginApi.AUTH, method = RequestMethod.POST)
 	@ResponseBody
-	public JSONResult login(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult,
+	public JSONResult auth(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult,
 			HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
@@ -148,16 +148,15 @@ public class LoginController {
 		}
 
 		AccountEntity account = accountService.getAccount(loginDto.getAccountName(), loginDto.getPassword());
-		
+
 		if (account == null) {
 			logger.info("用户名密码错误！accountName:{}", loginDto.getAccountName());
 			return JSONResult.fail(null, "用户名密码错误！");
 		}
 		try {
 
-
 			// 缓存用户信息 换成用cookie
-//			LoginAccountCache.put(account, 30 * 60); 
+			// LoginAccountCache.put(account, 30 * 60);
 
 			if (Objects.equals("admin", account.getAccountName())) {
 				LoginAccountCache.put(account);
@@ -173,7 +172,7 @@ public class LoginController {
 				}
 				List<RoleEntity> roles = roleService.getRoles(roleIds);
 				nativeCache.setRoles(account.getId(), roles);
-				//如果是大型电商网站应该把缓存放到redis等缓存服务器上
+				// 如果是大型电商网站应该把缓存放到redis等缓存服务器上
 				LoginAccountCache.put(account);
 				List<Accordion> accordions = getAccordions(false, account.getId());
 				LoginAccountCache.setAccordions(account.getAccountName(), accordions);
@@ -181,7 +180,7 @@ public class LoginController {
 			}
 		} catch (Exception e) {
 			LoginAccountCache.remove(account.getAccountName());
-			logger.error("登录失败!原因:{}",e.getMessage());
+			logger.error("登录失败!原因:{}", e.getMessage());
 			e.printStackTrace();
 			return JSONResult.fail("登录失败!");
 		}

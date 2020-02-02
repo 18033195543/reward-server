@@ -33,9 +33,9 @@ public class AccountAuthorizeController {
 	@Autowired
 	private RoleService roleService;
 	
-	@PostMapping(AuthorizeApi.ACCOUNT_LIST)
+	@GetMapping(AuthorizeApi.ACCOUNT_LIST)
 	public String accountList(ModelMap map) {
-		return "limitsOfAuthority/accountList";
+		return "limitsOfAuthority/accountList2";
 	}
 	
 	/**
